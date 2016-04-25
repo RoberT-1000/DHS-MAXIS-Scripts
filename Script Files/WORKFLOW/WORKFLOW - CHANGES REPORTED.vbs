@@ -32,38 +32,6 @@ IF IsEmpty(FuncLib_URL) = TRUE THEN	'Shouldn't load FuncLib if it already loaded
 	END IF
 END IF
 'END FUNCTIONS LIBRARY BLOCK================================================================================================
-'
-'Do
-'
-'	BeginDialog Dialog1, 0, 0, 191, 125, "Dialog"
-'	  ButtonGroup ButtonPressed
-'	    OkButton 135, 10, 50, 15
-'	    CancelButton 135, 30, 50, 15
-'	  CheckBox 10, 10, 95, 10,  "12 mo", twelve_mo_contact_checkbox
-'	  CheckBox 10, 25, 95, 10,  "Appt Letter", appt_letter_checkbox
-'	  CheckBox 10, 40, 95, 10,  "NOMI", NOMI_checkbox
-'	  CheckBox 10, 55, 95, 10,  "Overdue Baby", overdue_baby_checkbox
-'	  CheckBox 10, 70, 95, 10,  "GRH OP CL LEFT FACI", grh_op_checkbox
-'	  CheckBox 10, 85, 95, 10,  "Asset Transfer", ass_xfer_checkbox
-'	  CheckBox 10, 100, 95, 10, "MA-EPD No Initial Premium", MAEPD_checkbox
-'	EndDialog
-'
-'	Dialog
-'	If ButtonPressed = 0 then stopscript
-'	
-'	disable_StopScript = true
-'
-'	If twelve_mo_contact_checkbox 	= checked then call run_from_GitHub(script_repository & "/NOTICES/NOTICES - 12 MONTH CONTACT.vbs")
-'	If appt_letter_checkbox 		= checked then call run_from_GitHub(script_repository & "/NOTICES/NOTICES - APPOINTMENT LETTER.vbs")
-'	If NOMI_checkbox				= checked then call run_from_GitHub(script_repository & "/NOTICES/NOTICES - NOMI.vbs")
-'	If overdue_baby_checkbox		= checked then call run_from_GitHub(script_repository & "/NOTICES/NOTICES - OVERDUE BABY.vbs")
-'	If grh_op_checkbox 				= checked then call run_from_GitHub(script_repository & "/NOTICES/NOTICES - GRH OP CL LEFT FACI.vbs")
-'	If ass_xfer_checkbox 			= checked then call run_from_GitHub(script_repository & "/NOTICES/NOTICES - LTC - ASSET TRANSFER.vbs")
-'	If MAEPD_checkbox 				= checked then call run_from_GitHub(script_repository & "/NOTICES/NOTICES - MA-EPD NO INITIAL PREMIUM.vbs")
-'
-'
-'Loop until twelve_mo_contact_checkbox = unchecked
-
 
 ACTIONS_NEW_JOB_REPORTED_total = 0
 ACTIONS_SEND_SVES_total = 0
