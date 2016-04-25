@@ -65,10 +65,16 @@ END IF
 'Loop until twelve_mo_contact_checkbox = unchecked
 
 
-NEW_JOB_REPORTED_total = 0
-SEND_SVES_total = 0
-AREP_FORM_RECD_total = 0
-
+ACTIONS_NEW_JOB_REPORTED_total = 0
+ACTIONS_SEND_SVES_total = 0
+NOTES_AREP_FORM_RECD_total = 0
+NOTES_CRF_RECEIVED_total = 0
+NOTES_DECEASED_CLIENT_SUMMARY_total = 0
+NOTES_GOOD_CAUSE_CLAIMED_total = 0
+NOTES_INCARCERATION_total = 0
+NOTES_LTC_1503_total = 0
+NOTES_LTC_5181_total = 0
+NOTES_PREGNANCY_REPORTED_total = 0
 
 Do
 
@@ -76,37 +82,35 @@ BeginDialog Dialog1, 0, 0, 416, 260, "Changes Reported Dialog"
   ButtonGroup ButtonPressed
     OkButton 310, 235, 50, 15
     CancelButton 365, 235, 50, 15
-    PushButton 5, 30, 15, 10, "?", Button25
-    PushButton 190, 30, 15, 10, "+", ACTIONS_NEW_JOB_REPORTED_add_button
-    PushButton 210, 30, 15, 10, "-", ACTIONS_NEW_JOB_REPORTED_rem_button
-    PushButton 5, 45, 15, 10, "?", Button26
-    PushButton 190, 45, 15, 10, "+", ACTIONS_SEND_SVES_add_button
-    PushButton 210, 45, 15, 10, "-", ACTIONS_SEND_SVES_rem_button
-    PushButton 5, 60, 15, 10, "?", Button27
-    PushButton 190, 60, 15, 10, "+", NOTES_AREP_FORM_RECD_add_button
-    PushButton 210, 60, 15, 10, "-", NOTES_AREP_FORM_RECD_rem_button
-    PushButton 5, 75, 15, 10, "?", Button28
-    PushButton 190, 75, 15, 10, "+", CRF_RECEIVED_add_button
-    PushButton 210, 75, 15, 10, "-", CRF_RECEIVED_rem_button
-    PushButton 5, 90, 15, 10, "?", Button29
-    PushButton 190, 90, 15, 10, "+", DECEASED_CLIENT_SUMMARY_add_button
-    PushButton 210, 90, 15, 10, "-", DECEASED_CLIENT_SUMMARY_rem_button
-    PushButton 5, 105, 15, 10, "?", Button30
-    PushButton 190, 105, 15, 10, "+", GOOD_CAUSE_CLAIMED_add_button
-    PushButton 210, 105, 15, 10, "-", GOOD_CAUSE_CLAIMED_rem_button
-    PushButton 5, 120, 15, 10, "?", Button31
-    PushButton 190, 120, 15, 10, "+", INCARCERATION_add_button
-    PushButton 210, 120, 15, 10, "-", INCARCERATION_rem_button
-    PushButton 5, 135, 15, 10, "?", Button32
-    PushButton 190, 135, 15, 10, "+", LTC_1503_add_button
-    PushButton 210, 135, 15, 10, "-", LTC_1503_rem_button
-    PushButton 5, 150, 15, 10, "?", Button33
-    PushButton 190, 150, 15, 10, "+", LTC_5181_add_button
-    PushButton 210, 150, 15, 10, "-", LTC_5181_rem_button
-    PushButton 5, 165, 15, 10, "?", Button34
-    PushButton 190, 165, 15, 10, "+", PREGNANCY_REPORTED_add_button
-    PushButton 210, 165, 15, 10, "-", PREGNANCY_REPORTED_rem_button
-    PushButton 5, 215, 65, 10, "Discovery Mode", DISCOVERY_MODE_button
+    PushButton 5, 30, 15, 10, "?"		, ACTIONS_NEW_JOB_REPORTED_help_button
+    PushButton 190, 30, 15, 10, "+"		, ACTIONS_NEW_JOB_REPORTED_add_button
+    PushButton 210, 30, 15, 10, "-"		, ACTIONS_NEW_JOB_REPORTED_rem_button
+    PushButton 5, 45, 15, 10, "?"		, ACTIONS_SEND_SVES_help_button
+    PushButton 190, 45, 15, 10, "+"		, ACTIONS_SEND_SVES_add_button
+    PushButton 210, 45, 15, 10, "-"		, ACTIONS_SEND_SVES_rem_button
+    PushButton 5, 60, 15, 10, "?"		, NOTES_AREP_FORM_RECD_help_button
+    PushButton 190, 60, 15, 10, "+"		, NOTES_AREP_FORM_RECD_add_button
+    PushButton 210, 60, 15, 10, "-"		, NOTES_AREP_FORM_RECD_rem_button
+    PushButton 5, 75, 15, 10, "?"		, NOTES_CRF_RECEIVED_help_button
+    PushButton 190, 75, 15, 10, "+"		, NOTES_CRF_RECEIVED_add_button
+    PushButton 210, 75, 15, 10, "-"		, NOTES_CRF_RECEIVED_rem_button
+    PushButton 5, 90, 15, 10, "?"		, NOTES_DECEASED_CLIENT_SUMMARY_help_button
+    PushButton 190, 90, 15, 10, "+"		, NOTES_DECEASED_CLIENT_SUMMARY_add_button
+    PushButton 210, 90, 15, 10, "-"		, NOTES_DECEASED_CLIENT_SUMMARY_rem_button
+    PushButton 5, 105, 15, 10, "?"		, NOTES_INCARCERATION_help_button
+    PushButton 190, 105, 15, 10, "+"	, NOTES_INCARCERATION_add_button
+    PushButton 210, 105, 15, 10, "-"	, NOTES_INCARCERATION_rem_button
+    PushButton 5, 120, 15, 10, "?"		, NOTES_LTC_1503_help_button
+    PushButton 190, 120, 15, 10, "+"	, NOTES_LTC_1503_add_button
+    PushButton 210, 120, 15, 10, "-"	, NOTES_LTC_1503_rem_button
+    PushButton 5, 135, 15, 10, "?"		, NOTES_LTC_5181_help_button
+    PushButton 190, 135, 15, 10, "+"	, NOTES_LTC_5181_add_button
+    PushButton 210, 135, 15, 10, "-"	, NOTES_LTC_5181_rem_button
+    PushButton 5, 150, 15, 10, "?"		, NOTES_PREGNANCY_REPORTED_help_button
+    PushButton 190, 150, 15, 10, "+"	, NOTES_PREGNANCY_REPORTED_add_button
+    PushButton 210, 150, 15, 10, "-"	, NOTES_PREGNANCY_REPORTED_rem_button
+	
+    PushButton 5, 215, 65, 10, "Discovery Mode"	, DISCOVERY_MODE_button
   Text 10, 10, 65, 10, "---name of script---"
   Text 190, 10, 35, 10, "---update---"
   Text 235, 10, 50, 10, "---times-to-run---"
@@ -117,36 +121,138 @@ BeginDialog Dialog1, 0, 0, 416, 260, "Changes Reported Dialog"
   Text 300, 190, 110, 35, "When all the scripts are wrapped up, it will automatically run two scripts: FSET EXEMPTION CHECK and VERIFS NEEDED."
   GroupBox 5, 20, 285, 5, ""
   Text 25, 30, 160, 10, "ACTIONS - NEW JOB REPORTED"
-  Text 255, 30, 15, 10, NEW_JOB_REPORTED_total
+  Text 255, 30, 15, 10, ACTIONS_NEW_JOB_REPORTED_total
   Text 25, 45, 160, 10, "ACTIONS - SEND SVES"
-  Text 255, 45, 15, 10, SEND_SVES_total
+  Text 255, 45, 15, 10, ACTIONS_SEND_SVES_total
   Text 25, 60, 160, 10, "NOTES - AREP FORM REC'D"
-  Text 255, 60, 15, 10, AREP_FORM_RECD_total
+  Text 255, 60, 15, 10, NOTES_AREP_FORM_RECD_total
   Text 25, 75, 160, 10, "NOTES - CRF RECEIVED"
-  Text 255, 75, 15, 10, "0"
+  Text 255, 75, 15, 10, NOTES_CRF_RECEIVED_total
   Text 25, 90, 160, 10, "NOTES - DECEASED CLIENT SUMMARY"
-  Text 255, 90, 15, 10, "0"
-  Text 25, 105, 160, 10, "NOTES - GOOD CAUSE CLAIMED"
-  Text 255, 105, 15, 10, "0"
-  Text 25, 120, 160, 10, "NOTES - INCARCERATION"
-  Text 255, 120, 15, 10, "1"
-  Text 25, 135, 160, 10, "NOTES - LTC - 1503"
-  Text 255, 135, 15, 10, "0"
-  Text 25, 150, 160, 10, "NOTES - LTC - 5181"
-  Text 255, 150, 15, 10, "0"
-  Text 25, 165, 160, 10, "NOTES - PREGNANCY REPORTED"
-  Text 255, 165, 15, 10, "0"
+  Text 255, 90, 15, 10, NOTES_DECEASED_CLIENT_SUMMARY_total
+  Text 25, 105, 160, 10, "NOTES - INCARCERATION"
+  Text 255, 105, 15, 10, NOTES_INCARCERATION_total
+  Text 25, 120, 160, 10, "NOTES - LTC - 1503"
+  Text 255, 120, 15, 10, NOTES_LTC_1503_total
+  Text 25, 135, 160, 10, "NOTES - LTC - 5181"
+  Text 255, 135, 15, 10, NOTES_LTC_5181_total
+  Text 25, 150, 160, 10, "NOTES - PREGNANCY REPORTED"
+  Text 255, 150, 15, 10, NOTES_PREGNANCY_REPORTED_total
 EndDialog
 
     Dialog
+	cancel_confirmation
+	
+	'<<<<<<<THIS IS WHERE DISCOVERY MODE SHALL GO!!!!
+	If ButtonPressed = DISCOVERY_MODE_button then MsgBox "coming soon!"
+	'x = MsgBox ("Is your client reporting a change?", vbYesNoCancel + vbQuestion)
 
-    If ButtonPressed = ACTIONS_NEW_JOB_REPORTED_add_button then NEW_JOB_REPORTED_total = NEW_JOB_REPORTED_total + 1
-    If ButtonPressed = ACTIONS_NEW_JOB_REPORTED_rem_button then NEW_JOB_REPORTED_total = NEW_JOB_REPORTED_total - 1
-    If NEW_JOB_REPORTED_total < 0 then NEW_JOB_REPORTED_total = 0
+    If ButtonPressed = ACTIONS_NEW_JOB_REPORTED_add_button 			then ACTIONS_NEW_JOB_REPORTED_total = ACTIONS_NEW_JOB_REPORTED_total + 1
+    If ButtonPressed = ACTIONS_NEW_JOB_REPORTED_rem_button 			then ACTIONS_NEW_JOB_REPORTED_total = ACTIONS_NEW_JOB_REPORTED_total - 1
+	If ButtonPressed = ACTIONS_SEND_SVES_add_button					then ACTIONS_SEND_SVES_total = ACTIONS_SEND_SVES_total + 1
+	If ButtonPressed = ACTIONS_SEND_SVES_rem_button					then ACTIONS_SEND_SVES_total = ACTIONS_SEND_SVES_total - 1
+	If ButtonPressed = NOTES_AREP_FORM_RECD_add_button				then NOTES_AREP_FORM_RECD_total = NOTES_AREP_FORM_RECD_total + 1
+	If ButtonPressed = NOTES_AREP_FORM_RECD_rem_button				then NOTES_AREP_FORM_RECD_total = NOTES_AREP_FORM_RECD_total - 1
+	If ButtonPressed = NOTES_CRF_RECEIVED_add_button				then NOTES_CRF_RECEIVED_total = NOTES_CRF_RECEIVED_total + 1
+	If ButtonPressed = NOTES_CRF_RECEIVED_rem_button				then NOTES_CRF_RECEIVED_total = NOTES_CRF_RECEIVED_total - 1
+	If ButtonPressed = NOTES_DECEASED_CLIENT_SUMMARY_add_button		then NOTES_DECEASED_CLIENT_SUMMARY_total = NOTES_DECEASED_CLIENT_SUMMARY_total + 1
+	If ButtonPressed = NOTES_DECEASED_CLIENT_SUMMARY_rem_button		then NOTES_DECEASED_CLIENT_SUMMARY_total = NOTES_DECEASED_CLIENT_SUMMARY_total - 1
+	If ButtonPressed = NOTES_INCARCERATION_add_button				then NOTES_INCARCERATION_total = NOTES_INCARCERATION_total + 1
+	If ButtonPressed = NOTES_INCARCERATION_rem_button				then NOTES_INCARCERATION_total = NOTES_INCARCERATION_total - 1
+	If ButtonPressed = NOTES_LTC_1503_add_button					then NOTES_LTC_1503_total = NOTES_LTC_1503_total + 1
+	If ButtonPressed = NOTES_LTC_1503_rem_button					then NOTES_LTC_1503_total = NOTES_LTC_1503_total - 1
+	If ButtonPressed = NOTES_LTC_5181_add_button					then NOTES_LTC_5181_total = NOTES_LTC_5181_total + 1
+	If ButtonPressed = NOTES_LTC_5181_rem_button					then NOTES_LTC_5181_total = NOTES_LTC_5181_total - 1
+	If ButtonPressed = NOTES_PREGNANCY_REPORTED_add_button			then NOTES_PREGNANCY_REPORTED_total = NOTES_PREGNANCY_REPORTED_total + 1
+	If ButtonPressed = NOTES_PREGNANCY_REPORTED_rem_button			then NOTES_PREGNANCY_REPORTED_total = NOTES_PREGNANCY_REPORTED_total - 1
+	
+	If ButtonPressed = ACTIONS_NEW_JOB_REPORTED_help_button			then CreateObject("WScript.Shell").Run("https://www.dhssir.cty.dhs.state.mn.us/MAXIS/blzn/Script%20Instructions%20Wiki/New%20job%20reported.aspx")
+	If ButtonPressed = ACTIONS_SEND_SVES_help_button				then CreateObject("WScript.Shell").Run("https://www.dhssir.cty.dhs.state.mn.us/MAXIS/blzn/Script%20Instructions%20Wiki/Send%20SVES.aspx")
+	If ButtonPressed = NOTES_AREP_FORM_RECD_help_button				then CreateObject("WScript.Shell").Run("https://www.dhssir.cty.dhs.state.mn.us/MAXIS/blzn/Script%20Instructions%20Wiki/AREP%20Form%20Rec%27d.aspx")
+	If ButtonPressed = NOTES_CRF_RECEIVED_help_button				then CreateObject("WScript.Shell").Run("https://www.dhssir.cty.dhs.state.mn.us/MAXIS/blzn/Script%20Instructions%20Wiki/Change%20Report%20Form%20received.aspx")
+	If ButtonPressed = NOTES_DECEASED_CLIENT_SUMMARY_help_button	then CreateObject("WScript.Shell").Run("")
+	If ButtonPressed = NOTES_INCARCERATION_help_button				then CreateObject("WScript.Shell").Run("https://www.dhssir.cty.dhs.state.mn.us/MAXIS/blzn/Script%20Instructions%20Wiki/Incarceration.aspx")
+	If ButtonPressed = NOTES_LTC_1503_help_button					then CreateObject("WScript.Shell").Run("https://www.dhssir.cty.dhs.state.mn.us/MAXIS/blzn/Script%20Instructions%20Wiki/LTC%20-%201503.aspx")
+	If ButtonPressed = NOTES_LTC_5181_help_button					then CreateObject("WScript.Shell").Run("https://www.dhssir.cty.dhs.state.mn.us/MAXIS/blzn/Script%20Instructions%20Wiki/LTC%20-%205181.aspx")
+	If ButtonPressed = NOTES_PREGNANCY_REPORTED_help_button			then CreateObject("WScript.Shell").Run("https://www.dhssir.cty.dhs.state.mn.us/MAXIS/blzn/Script%20Instructions%20Wiki/Pregnancy%20Reported.aspx")	
+	
+    If ACTIONS_NEW_JOB_REPORTED_total 		< 0 then ACTIONS_NEW_JOB_REPORTED_total = 0
+	If ACTIONS_SEND_SVES_total				< 0 then ACTIONS_SEND_SVES_total = 0
+	If NOTES_AREP_FORM_RECD_total			< 0 then NOTES_AREP_FORM_RECD_total = 0
+	If NOTES_CRF_RECEIVED_total				< 0 then NOTES_CRF_RECEIVED_total = 0
+	If NOTES_DECEASED_CLIENT_SUMMARY_total	< 0 then NOTES_DECEASED_CLIENT_SUMMARY_total = 0
+	If NOTES_GOOD_CAUSE_CLAIMED_total		< 0 then NOTES_GOOD_CAUSE_CLAIMED_total = 0
+	If NOTES_INCARCERATION_total			< 0 then NOTES_INCARCERATION_total = 0
+	If NOTES_LTC_1503_total					< 0 then NOTES_LTC_1503_total = 0
+	If NOTES_LTC_5181_total					< 0 then NOTES_LTC_5181_total = 0
+	If NOTES_PREGNANCY_REPORTED_total		< 0 then NOTES_PREGNANCY_REPORTED_total = 0
 
 Loop until ButtonPressed = -1
 
+disable_StopScript = true
 
-x = MsgBox ("Is your client reporting a change?", vbYesNoCancel + vbQuestion)
+If ACTIONS_NEW_JOB_REPORTED_total > 0 then
+	Do
+		call run_from_GitHub(script_repository & "/ACTIONS/ACTIONS - NEW JOB REPORTED.vbs")
+		ACTIONS_NEW_JOB_REPORTED_total = ACTIONS_NEW_JOB_REPORTED_total - 1
+	Loop until ACTIONS_NEW_JOB_REPORTED_total <= 0
+End if
+
+If ACTIONS_SEND_SVES_total > 0 then
+	Do
+		call run_from_GitHub(script_repository & "/ACTIONS/ACTIONS - SEND SVES.vbs")
+		ACTIONS_SEND_SVES_total = ACTIONS_SEND_SVES_total - 1
+	Loop until ACTIONS_SEND_SVES_total <= 0
+End if
+
+If NOTES_AREP_FORM_RECD_total > 0 then
+	Do
+		call run_from_GitHub(script_repository & "/NOTES/NOTES - AREP FORM RECEIVED.vbs")
+		NOTES_AREP_FORM_RECD_total = NOTES_AREP_FORM_RECD_total - 1
+	Loop until NOTES_AREP_FORM_RECD_total <= 0
+End if
+
+If NOTES_CRF_RECEIVED_total > 0 then
+	Do
+		call run_from_GitHub(script_repository & "/NOTES/NOTES - CHANGE REPORT FORM RECEIVED.vbs")
+		NOTES_CRF_RECEIVED_total = NOTES_CRF_RECEIVED_total - 1
+	Loop until NOTES_CRF_RECEIVED_total <= 0
+End if
+
+If NOTES_DECEASED_CLIENT_SUMMARY_total > 0 then
+	Do
+		call run_from_GitHub(script_repository & "/NOTES/NOTES - DECEASED CLIENT SUMMARY.vbs")
+		NOTES_DECEASED_CLIENT_SUMMARY_total = NOTES_DECEASED_CLIENT_SUMMARY_total - 1
+	Loop until NOTES_DECEASED_CLIENT_SUMMARY_total <= 0
+End if
+
+If NOTES_INCARCERATION_total > 0 then
+	Do
+		call run_from_GitHub(script_repository & "/NOTES/NOTES - INCARCERATION.vbs")
+		NOTES_INCARCERATION_total = NOTES_INCARCERATION_total - 1
+	Loop until NOTES_INCARCERATION_total <= 0
+End if
+
+If NOTES_LTC_1503_total > 0 then
+	Do
+		call run_from_GitHub(script_repository & "/NOTES/NOTES - LTC - 1503.vbs")
+		NOTES_LTC_1503_total = NOTES_LTC_1503_total - 1
+	Loop until NOTES_LTC_1503_total <= 0
+End if
+
+If NOTES_LTC_5181_total > 0 then
+	Do
+		call run_from_GitHub(script_repository & "/NOTES/NOTES - LTC - 5181.vbs")
+		NOTES_LTC_5181_total = NOTES_LTC_5181_total - 1
+	Loop until NOTES_LTC_5181_total <= 0
+End if
+
+If NOTES_PREGNANCY_REPORTED_total > 0 then
+	Do
+		call run_from_GitHub(script_repository & "/NOTES/NOTES - PREGNANCY REPORTED.vbs")
+		NOTES_PREGNANCY_REPORTED_total = NOTES_PREGNANCY_REPORTED_total - 1
+	Loop until NOTES_PREGNANCY_REPORTED_total <= 0
+End if
+
 
 'Dialog
