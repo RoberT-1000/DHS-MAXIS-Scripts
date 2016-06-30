@@ -38,7 +38,8 @@ IF IsEmpty(FuncLib_URL) = TRUE THEN	'Shouldn't load FuncLib if it already loaded
 END IF
 'END FUNCTIONS LIBRARY BLOCK================================================================================================
 
-BeginDialog bulk_dail_report_dialog, 0, 0, 361, 150, "Bulk DAIL report dialog"
+'<<<<<SETTING THIS TO dialog1 SEEMS TO RESOLVE EXCEPTION ACCESS ISSUE'
+BeginDialog dialog1, 0, 0, 361, 150, "Bulk DAIL report dialog"
   EditBox 10, 35, 345, 15, x_number_editbox
   CheckBox 20, 85, 25, 10, "ALL", All_check
   ButtonGroup ButtonPressed
@@ -74,7 +75,7 @@ all_check = 1
 
 'Shows the dialog. Doesn't need to loop since we already looked at MAXIS.
 DO
-	dialog bulk_dail_report_dialog
+	dialog
 	cancel_confirmation
 	CALL check_for_password(are_we_passworded_out)			'function that checks to ensure that the user has not passworded out of MAXIS, allows user to password back into MAXIS						
 Loop until are_we_passworded_out = false					'loops until user passwords back in					
