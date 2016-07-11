@@ -1,6 +1,7 @@
 'STATS GATHERING----------------------------------------------------------------------------------------------------
 name_of_script = "ACTIONS - MAIN MENU.vbs"
 start_time = timer 
+run_locally = true
 
 'LOADING FUNCTIONS LIBRARY FROM GITHUB REPOSITORY===========================================================================
 IF IsEmpty(FuncLib_URL) = TRUE THEN	'Shouldn't load FuncLib if it already loaded once
@@ -65,20 +66,20 @@ ELSE
 END IF
 'END FUNCTIONS LIBRARY BLOCK================================================================================================
 
-Function declare_main_menu_dialog(script_category)
+Function declare_main_menu_dialog(script_category_for_menu)
 
 	'Runs through each script in the array and generates a list of subcategories based on the category located in the function. Also modifies the script description if it's from the last two months, to include a "NEW!!!" notification.
-	For current_script = 0 to ubound(script_array)
+	For current_script = 0 to total_number_of_scripts
 		'Subcategory handling (creating a second list as a string which gets converted later to an array)
-		If ucase(script_array(current_script).category) = ucase(script_category) then																								'If the script in the array is of the correct category (ACTIONS/NOTES/ETC)...
-			For each listed_subcategory in script_array(current_script).subcategory																									'...then iterate through each listed subcategory, and...
+		If ucase(script_array(script_category, current_script)) = ucase(script_category_for_menu) then																								'If the script in the array is of the correct category (ACTIONS/NOTES/ETC)...
+			For each listed_subcategory in script_array(script_subcategory, current_script)																									'...then iterate through each listed subcategory, and...
 				If listed_subcategory <> "" and InStr(subcategory_list, ucase(listed_subcategory)) = 0 then subcategory_list = subcategory_list & "|" & ucase(listed_subcategory)	'...if the listed subcategory isn't blank and isn't already in the list, then add it to our handy-dandy list.	
 			Next
 		End if
 		'Adds a "NEW!!!" notification to the description if the script is from the last two months.
-		If DateDiff("m", script_array(current_script).release_date, DateAdd("m", -2, date)) <= 0 then 
-			script_array(current_script).description = "NEW " & script_array(current_script).release_date & "!!! --- " & script_array(current_script).description
-			script_array(current_script).release_date = "12/12/1999" 'backs this out and makes it really old so it doesn't repeat each time the dialog loops. This prevents NEW!!!... from showing multiple times in the description.
+		If DateDiff("m", script_array(script_release_date, current_script), DateAdd("m", -2, date)) <= 0 then 
+			script_array(script_description, current_script) = "NEW " & script_array(script_release_date, current_script) & "!!! --- " & script_array(script_description, current_script)
+			script_array(script_release_date, current_script) = "12/12/1999" 'backs this out and makes it really old so it doesn't repeat each time the dialog loops. This prevents NEW!!!... from showing multiple times in the description.
 		End if
 		
 	Next
@@ -94,23 +95,24 @@ Function declare_main_menu_dialog(script_category)
 		subcategory_array(i, 0) = subcategory_list(i)
 	Next
 	
-	BeginDialog dialog1, 0, 0, 600, 400, script_category & " scripts main menu dialog"
-	 	Text 5, 5, 435, 10, script_category & " scripts main menu: select the script to run from the choices below."
+	BeginDialog dialog1, 0, 0, 600, 400, script_category_for_menu & " scripts main menu dialog"
+	
+	 	Text 5, 5, 435, 10, script_category_for_menu & " scripts main menu: select the script to run from the choices below."
 	  	ButtonGroup ButtonPressed
 			
 		'SUBCATEGORY HANDLING--------------------------------------------
 		subcat_button_position = 5
 		
-		For i = 0 to ubound(subcategory_array)
-		
-			'Displays the button and text description-----------------------------------------------------------------------------------------------------------------------------
-			'FUNCTION		HORIZ. ITEM POSITION	VERT. ITEM POSITION		ITEM WIDTH	ITEM HEIGHT		ITEM TEXT/LABEL				BUTTON VARIABLE
-			PushButton 		subcat_button_position, 20, 					50, 		15, 			subcategory_array(i, 0), 	subcat_button_placeholder
-			
-			subcategory_array(i, 1) = subcat_button_placeholder	'The .button property won't carry through the function. This allows it to escape the function. Thanks VBScript.
-			subcat_button_position = subcat_button_position + 50
-			subcat_button_placeholder = subcat_button_placeholder + 1
-		Next
+'		For i = 0 to ubound(subcategory_array)
+'		
+'			'Displays the button and text description-----------------------------------------------------------------------------------------------------------------------------
+'			'FUNCTION		HORIZ. ITEM POSITION	VERT. ITEM POSITION		ITEM WIDTH	ITEM HEIGHT		ITEM TEXT/LABEL				BUTTON VARIABLE
+'			PushButton 		subcat_button_position, 20, 					50, 		15, 			subcategory_array(i, 0), 	subcat_button_placeholder
+'			
+'			subcategory_array(i, 1) = subcat_button_placeholder	
+'			subcat_button_position = subcat_button_position + 50
+'			subcat_button_placeholder = subcat_button_placeholder + 1
+'		Next
 				
 		
 		'SCRIPT LIST HANDLING--------------------------------------------
@@ -119,13 +121,13 @@ Function declare_main_menu_dialog(script_category)
 		'' 	PushButton 445, 10, 65, 10, "SIR instructions", 	SIR_instructions_button
 		'This starts here, but it shouldn't end here :)
 		vert_button_position = 50
-		
+		hori_button_position = 5
 
-		For current_script = 0 to ubound(script_array)
-			If ucase(script_array(current_script).category) = ucase(script_category) then
+		For current_script = 0 to ubound(script_array, 2)
+			If ucase(script_array(script_category, current_script)) = ucase(script_category_for_menu) then
 			
-				'Joins all subcategories together
-				subcategory_string = ucase(join(script_array(current_script).subcategory))
+				'Joins all subcategories together, from this particular script it's loaded up
+				subcategory_string = ucase(join(script_array(script_subcategory, current_script)))
 				
 				'Accounts for scripts without subcategories
 				If subcategory_string = "" then subcategory_string = "MAIN"		'<<<THIS COULD BE A PROPERTY OF THE CLASS
@@ -134,17 +136,23 @@ Function declare_main_menu_dialog(script_category)
 				If InStr(subcategory_string, subcategory_selected) <> 0 then 
 			
 					SIR_button_placeholder = button_placeholder + 1	'We always want this to be one more than the button_placeholder
+
+ButtonGroup ButtonPressed
 				
 					'Displays the button and text description-----------------------------------------------------------------------------------------------------------------------------
-					'FUNCTION		HORIZ. ITEM POSITION	VERT. ITEM POSITION		ITEM WIDTH	ITEM HEIGHT		ITEM TEXT/LABEL										BUTTON VARIABLE
-					PushButton 		5, 						vert_button_position, 	10, 		10, 			"?", 												SIR_button_placeholder
-					PushButton 		18,						vert_button_position, 	120, 		10, 			script_array(current_script).script_name, 			button_placeholder
-					Text 			120 + 23, 				vert_button_position, 	500, 		10, 			"--- " & script_array(current_script).description
+					'FUNCTION		HORIZ. ITEM POSITION		VERT. ITEM POSITION		ITEM WIDTH	ITEM HEIGHT		ITEM TEXT/LABEL										BUTTON VARIABLE
+					PushButton 		hori_button_position,		vert_button_position, 	10, 		10, 			"?", 												SIR_button_placeholder
+					PushButton 		hori_button_position + 13,	vert_button_position, 	120, 		10, 			script_array(script_name, current_script), 			button_placeholder
+					'Text 			120 + 23, 					vert_button_position, 	500, 		10, 			"--- " & script_array(current_script).description
 					'----------
 					vert_button_position = vert_button_position + 15	'Needs to increment the vert_button_position by 15px (used by both the text and buttons)
+					If vert_button_position > 380 then
+						hori_button_position = hori_button_position + 150	'Moves it 150 pixels to the right
+						vert_button_position = 50							'Resets this
+					End if
 					'----------
-					script_array(current_script).button = button_placeholder	'The .button property won't carry through the function. This allows it to escape the function. Thanks VBScript.
-					script_array(current_script).SIR_instructions_button = SIR_button_placeholder	'The .button property won't carry through the function. This allows it to escape the function. Thanks VBScript.
+					script_array(script_button, current_script) = button_placeholder	'The .button property won't carry through the function. This allows it to escape the function. Thanks VBScript.
+					script_array(script_SIR_instructions_button, current_script) = SIR_button_placeholder	'The .button property won't carry through the function. This allows it to escape the function. Thanks VBScript.
 					button_placeholder = button_placeholder + 2
 				End if
 			End if
@@ -174,7 +182,7 @@ dialog1 = 1000
 Do
 
 	'Creates the dialog
-	call declare_main_menu_dialog("Actions")
+	call declare_main_menu_dialog("Notes")
 	
 	'At the beginning of the loop, we are not ready to exit it. Conditions later on will impact this.
 	ready_to_exit_loop = false
@@ -189,15 +197,26 @@ Do
 	Next
 
 	'Runs through each script in the array... if the user selected script instructions (via ButtonPressed) it'll open_URL_in_browser to those instructions
-	For i = 0 to ubound(script_array)
-		If ButtonPressed = script_array(i).SIR_instructions_button then call open_URL_in_browser(script_array(i).SIR_instructions_URL)
-	Next    
+	'For i = 0 to ubound(script_array)
+		'If ButtonPressed = script_array(i).SIR_instructions_button then call open_URL_in_browser("http://google.com")
+	'Next    
 
 	'Runs through each script in the array... if the user selected the actual script (via ButtonPressed), it'll run_from_GitHub
-	For i = 0 to ubound(script_array)
-		If ButtonPressed = script_array(i).button then 
+	For i = 0 to ubound(script_array, 2)
+		If ButtonPressed = script_array(script_button, i) then 
 			ready_to_exit_loop = true		'Doing this just in case a stopscript or script_end_procedure is missing from the script in question
-			script_to_run = script_array(i).script_URL
+			
+			
+			If run_locally = true then
+				script_repository = "C:\DHS-MAXIS-Scripts\Script Files\"
+				script_array(script_URL, i) = script_repository & ucase(script_array(script_category, i)) & "\" & ucase(script_array(script_category, i) & " - " & script_array(script_name, i)) & ".vbs"
+			Else
+	        	If script_repository = "" then script_repository = "https://raw.githubusercontent.com/MN-Script-Team/DHS-MAXIS-Scripts/master/Script%20Files/"    'Assumes we're scriptwriters
+	        	script_array(script_URL, i) = script_repository & ucase(script_array(script_category, i)) & "/" & replace(ucase(script_array(script_category, i) & "%20-%20" & script_array(script_name, i)) & ".vbs", " ", "%20")
+			End if
+			
+			script_to_run = script_array(script_URL, i)
+			
 			Exit for
 		End if
 	Next    
@@ -206,7 +225,7 @@ Do
 Loop until ready_to_exit_loop = true
 
 'Updating dialog1 to be a separate numeric value. This might not be necessary but it's currently working so I am not changing it.
-dialog1 = dialog1 + 1
+'dialog1 = dialog1 + 1
 
 call run_from_GitHub(script_to_run)
 
