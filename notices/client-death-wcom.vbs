@@ -88,6 +88,8 @@ If len(MAXIS_footer_year) > 2 THEN MAXIS_footer_year = right(MAXIS_footer_year, 
 
 'Navigating to the spec wcom screen
 CALL Check_for_MAXIS(false)
+									
+back_to_self
 
 Emwritescreen MAXIS_case_number, 18, 43
 Emwritescreen MAXIS_footer_month, 20, 43
@@ -130,6 +132,6 @@ Do
 	If spec_edit_check = "NOTICE" THEN no_fs_waiting = true
 Loop until spec_edit_check = "NOTICE"
 
-If no_fs_waiting = true AND no_mf_waiting = true then script_end_procedure("No waiting FS notice was found for the requested month")
+If no_fs_waiting = true then script_end_procedure("No waiting FS notice was found for the requested month")
 
 script_end_procedure("WCOM has been added to the first found waiting SNAP notice for the month and case selected. Please review the notice.")

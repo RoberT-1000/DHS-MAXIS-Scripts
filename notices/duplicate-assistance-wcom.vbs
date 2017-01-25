@@ -96,6 +96,8 @@ If len(MAXIS_footer_year) > 2 THEN MAXIS_footer_year = right(MAXIS_footer_year, 
 
 'Navigating to the spec wcom screen
 CALL Check_for_MAXIS(false)
+									
+back_to_self
 
 Emwritescreen MAXIS_case_number, 18, 43
 Emwritescreen MAXIS_footer_month, 20, 43
@@ -124,7 +126,7 @@ Do
 					CALL write_variable_in_SPEC_MEMO("******************************************************")
 					CALL write_variable_in_SPEC_MEMO("Dear Client,")
 					CALL write_variable_in_SPEC_MEMO("")
-					CALL write_variable_in_SPEC_MEMO("You received SNAP benefits from the state of " & state_of_assistance & " during the month of " & MAXIS_footer_month & "/" & MAXIS_footer_year & "You cannot received SNAP benefits from two states at the same time.")
+					CALL write_variable_in_SPEC_MEMO("You received SNAP benefits from the state of " & state_of_assistance & " during the month of " & MAXIS_footer_month & "/" & MAXIS_footer_year & ". You cannot receive SNAP benefits from two states at the same time.")
 					CALL write_variable_in_SPEC_MEMO("")
 					CALL write_variable_in_SPEC_MEMO("If you have any questions or concerns please feel free to contact your worker.")
 					CALL write_variable_in_SPEC_MEMO("---")
